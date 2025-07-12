@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.A.A.R.V Prototype</title>
+    <link rel="icon" href="VGames logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <div id="contents">
+        <div id="header">
+            <h1 id="heading">D.A.A.R.V Software Prototype</h1>
+            <p class="quote">(Dhruvin, Atharv, Anukalp, Rajesh, Vidit)</p>
+        </div>
+        <br>
+        <div id="main-area">
+            <div id="team">
+                <h2>About our team</h2>
+                <p class="quote">Innovative Inventors</p>
+                <label>Team members:-</label>
+                <ul>
+                    <li>Dhruvin Parmar (Team Leader)</li>
+                    <li>Atharv Verma</li>
+                    <li>Anukalp Chaurasiya</li>
+                    <li>R. Rajesh</li>
+                    <li>Vidit Keshari (me)</li>
+                </ul>
+                <label>Information about team:-</label>
+                <ul>
+                    <li>We are a team of 5 members working in our school stem project</li>
+                    <li>Our aim is to make a "Smart Camera" that has multiple feature and can be extended</li>
+                    <li>Its main focus is towards activity detection and enrgy saving</li>
+                </ul>
+            </div>
+            <div id="base-model">
+                <div id="features">
+                    <h2>Base model features:-</h2>
+                    <ul>
+                        <li>Activity Detection</li>
+                        <li>Voice Control</li>
+                        <li>Mobile Application (UI)</li>
+                        <li>Customization</li>
+                        <li>Survellience</li>
+                    </ul>
+                    <h2>Additional added features:-</h2>
+                    <ul>
+                        <li>Automatic temperature control</li>
+                    </ul>
+                </div>
+                <div id="proto-cmd-format">
+                    <h2>Prototype's Command Format</h2>
+                    <p><strong>Format:</strong> [Namespace] [Action] [Argument]</p>
+                    <p><em>Note:</em> Argument is optional in some commands.</p>
+
+                    <h3>Namespaces:</h3>
+                    <ol>
+                        <li>
+                            <strong>SOS</strong> - A SOS alarm to notify people about emergencies.
+                            <br><strong>Actions:</strong>
+                            <ul>
+                                <li><code>trigger</code>: Trigger SOS</li>
+                                <li><code>stop</code>: Stop the alert system</li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <strong>user_cmd</strong> - Command entered by the user (text or voice)
+                            <br><strong>Actions:</strong>
+                            <ul>
+                                <li><code>run</code>: Run the entered command</li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <strong>Appliance</strong> - Control a home appliance
+                            <br><strong>Actions:</strong>
+                            <ul>
+                                <li><code>light</code>: Control the light
+                                    <br><strong>Light Arguments:</strong>
+                                    <ul>
+                                        <li><code>on</code>: Turn light on</li>
+                                        <li><code>off</code>: Turn light off</li>
+                                    </ul>
+                                </li>
+                                <br>
+                                <li>
+                                    <code>fan</code>: Control the fan
+                                    <br><strong>Fan Arguments:</strong>
+                                    <ul>
+                                        <li><code>on</code>: Turn fan on</li>
+                                        <li><code>off</code>: Turn fan off</li>
+                                        <li><code>Number 0-4</code>: Control fan speed</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div id="simulator">
+                <h2>Simulator</h2>
+                <p class="quote">A simple prototype simulator; based on a pattern analysing rule-based AI devloped by
+                    VGames
+                </p>
+                <div id="sos">
+                    <h3>An SOS Alert</h3>
+                    <button type="button" onclick="toggleSOS();" id="sos-btn">Trigger SOS</button>
+                </div>
+                <div id="voice-ctrl">
+                    <h3>Voice control:-</h3>
+                    <p>
+                        This feature is currently in development phase, use the text based instead.
+                        Currently, the commands are code based and are not read by a smart AI.
+                        Thus all the commands are case sensetive. Since there is no AI, the commands are to be
+                        written in a specific format given above.
+                    </p>
+                    <input type="text" id="text-inp" placeholder="Enter command here">
+                    <button type="button" onclick="runCmd('user_cmd run');" id="cmd-btn">Run command</button>
+                </div>
+                <div id="activity-detection">
+                    <h3>Activity Detection:-</h3>
+                    <p>Check whether a person is in room (click below to toggle)</p>
+                    <button type="button" onclick="togglePerson();" id="person-btn">No one in room</button>
+                </div>
+                <div id="appliances">
+                    <h3>Supported appliances:-</h3>
+                    <ul>
+                        <li>
+                            Light - <div id="light" onclick="toggleAppliance('light');"></div>
+                        </li>
+                        <li>
+                            Fan - <img src="fan.png" id="fan" onclick="toggleAppliance('fan');">
+                            Fan speed -
+                            <input type="range" id="fan-speed" min="0" max="4" step="1" value="2"
+                                onchange="runCmd('appliance fan ' + this.value)">
+                            <label id="fan-speed-disp">2</label>
+                        </li>
+                    </ul>
+                </div>
+                <div id="signal">
+                    <h3>Output signals for appliance:-</h3>
+                    <ul id="signal-output"></ul>
+                </div>
+                <div id="output-logs">
+                    <h3>Output console:-</h3>
+                    <ul id="logs">
+                    </ul>
+                    <button type="button" id="clear" onclick="clearLogs();">Clear output console</button>
+                </div>
+            </div>
+        </div>
+        <audio id="sos-sound" loop>
+            <source src="sos.mp3" type="audio/mpeg">
+            Your browser does not support audio
+        </audio>
+</body>
+
+</html>
